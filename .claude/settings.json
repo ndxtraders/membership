@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(git *)",
+      "Bash(vercel *)",
+      "Bash(curl *)",
+      "Edit(/Users/raulvaughn/Desktop/claude-cowork/membership-site/membership/**)",
+      "Write(/Users/raulvaughn/Desktop/claude-cowork/membership-site/membership/**)",
+      "MultiEdit(/Users/raulvaughn/Desktop/claude-cowork/membership-site/membership/**)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push --force-with-lease*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -fdx*)",
+      "Bash(git clean -fd*)",
+      "Bash(rm -rf*)",
+      "Bash(rm -fr*)"
+    ]
+  }
+}
