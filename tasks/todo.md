@@ -22,17 +22,27 @@ This is the single source of truth for what's in progress. Mark items as you com
 - [ ] Provision Supabase via Vercel Marketplace, pull env vars locally
 - [ ] Deploy coming-soon page to production
 
-## Phase 1 — Auth + App Shell (Week 1, remainder)
+## Phase 1 — Auth + App Shell (Week 1, remainder) — ✅ COMPLETE 2026-05-16
 
-- [ ] Install `@supabase/ssr`, `@supabase/supabase-js`
-- [ ] Server-side Supabase client (`lib/auth/server.ts`)
-- [ ] Client-side Supabase client (`lib/auth/client.ts`)
-- [ ] Middleware: refresh session cookies, gate `/app/*` and `/admin/*`
-- [ ] `app/(marketing)/sign-in/page.tsx` — magic link + Google
-- [ ] `app/(app)/layout.tsx` — authenticated app shell with mobile bottom nav
-- [ ] `app/(app)/dashboard/page.tsx` — empty-state dashboard
-- [ ] `app/(admin)/layout.tsx` — admin gate via `ADMIN_USER_IDS` env check
-- [ ] First Playwright smoke test scaffold (loads `/`)
+- [x] Install `@supabase/ssr`, `@supabase/supabase-js` (done Phase 0)
+- [x] Server-side Supabase client (`lib/auth/server.ts`)
+- [x] Client-side Supabase client (`lib/auth/client.ts`)
+- [x] **`proxy.ts`** (Next 16 renamed `middleware.ts` → `proxy.ts`): refresh session cookies, optimistic-gate `/dashboard`, `/account`, `/admin`
+- [x] `app/(marketing)/sign-in/page.tsx` — magic link (Google deferred per decision)
+- [x] `app/(marketing)/auth/callback/route.ts` — PKCE code exchange
+- [x] `app/(marketing)/auth/auth-code-error/page.tsx` — expired-link fallback
+- [x] `app/(app)/layout.tsx` — authoritative server auth gate + mobile shell
+- [x] `app/(app)/dashboard/page.tsx` — empty-state dashboard
+- [x] `app/(app)/account/page.tsx` + sign-out server action
+- [x] `app/admin/layout.tsx` — admin gate via `ADMIN_USER_IDS` (literal `/admin`, not a route group — see lessons)
+- [x] `components/layout/{mobile-nav,app-shell}.tsx` — bottom-tab nav, iOS safe-area aware
+- [x] Build green + curl smoke test (all protected routes 307 → /sign-in)
+- [ ] Playwright smoke test scaffold — deferred to Phase 6 QA per plan
+
+### Phase 1 follow-ups (not blockers)
+- [ ] Capture Rev's Supabase user ID after his first sign-in → set `ADMIN_USER_IDS` env in Vercel + `.env.local` (until then `/admin` 404s for everyone — safe default)
+- [ ] Public `users` mirror table + first-login upsert → deferred to Phase 2 (needs Drizzle schema + RLS; avoided building throwaway schema now)
+- [ ] Branded auth emails → Phase 5 (MailerLite). Until then Supabase default sender (low rate limit, fine for beta)
 
 ## Phase 2 — Content Schema + Admin v1 (Week 2)
 
