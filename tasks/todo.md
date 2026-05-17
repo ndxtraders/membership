@@ -40,7 +40,7 @@ This is the single source of truth for what's in progress. Mark items as you com
 - [ ] Playwright smoke test scaffold — deferred to Phase 6 QA per plan
 
 ### Phase 1 follow-ups (not blockers)
-- [ ] Capture Rev's Supabase user ID after his first sign-in → set `ADMIN_USER_IDS` env in Vercel + `.env.local` (until then `/admin` 404s for everyone — safe default)
+- [x] Capture Rev's Supabase user ID after his first sign-in → set `ADMIN_USER_IDS` (done 2026-05-17: `92f5a614-…c00c40` / raulvaughn@gmail.com; set in `.env.local` + Vercel prod & dev; redeployed). Magic-link flow verified end-to-end.
 - [ ] Public `users` mirror table + first-login upsert → deferred to Phase 2 (needs Drizzle schema + RLS; avoided building throwaway schema now)
 - [ ] Branded auth emails → Phase 5 (MailerLite). Until then Supabase default sender (low rate limit, fine for beta)
 - [ ] **Vercel `preview` env vars not set** — `vercel env add … preview` via stdin fails; needs `--value … --yes --force`. Not needed until PR preview deploys are used. Wire before Phase 6 QA. Production + development are set.
