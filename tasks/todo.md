@@ -43,6 +43,8 @@ This is the single source of truth for what's in progress. Mark items as you com
 - [ ] Capture Rev's Supabase user ID after his first sign-in → set `ADMIN_USER_IDS` env in Vercel + `.env.local` (until then `/admin` 404s for everyone — safe default)
 - [ ] Public `users` mirror table + first-login upsert → deferred to Phase 2 (needs Drizzle schema + RLS; avoided building throwaway schema now)
 - [ ] Branded auth emails → Phase 5 (MailerLite). Until then Supabase default sender (low rate limit, fine for beta)
+- [ ] **Vercel `preview` env vars not set** — `vercel env add … preview` via stdin fails; needs `--value … --yes --force`. Not needed until PR preview deploys are used. Wire before Phase 6 QA. Production + development are set.
+- [ ] Supabase project migrated to Rev-owned org (ref `ntxbxeuqzlmxqdmberki`) — see DECISIONS-LOG amendment 2026-05-17. Verify Postgres pooler strings in `.env.local` before first Drizzle migration in Phase 2.
 
 ## Phase 2 — Content Schema + Admin v1 (Week 2)
 

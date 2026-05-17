@@ -94,19 +94,4 @@ Everything else in the PRD stands.
 
 ---
 
-## Amendment — 2026-05-17: Supabase project moved to Rev-owned org
-
-**Supersedes section 1 / section 3 wording "auto-provisioned via Vercel Marketplace."**
-
-The Phase 0 Vercel Marketplace integration created the Supabase project inside a **Vercel-managed Supabase org** — reachable only via Vercel SSO, billed through Vercel, and entangling Rev's future customer data with the Vercel org. Decision (Rev, 2026-05-17): **migrate to a Supabase project Rev owns directly.**
-
-- New project: name `membership`, ref **`ntxbxeuqzlmxqdmberki`**, org `rfdsutclmwuhaywguljw` (Rev's own), region `us-west-1`, created via authenticated `supabase` CLI.
-- Old Vercel-managed resource `supabase-yellow-cable` (ref `yivawqgflmyenjgzzpym`) **deleted** (zero data, pre-launch).
-- Env vars rewired in `.env.local` and Vercel (production + development; preview deferred — see `tasks/todo.md`).
-- Supabase Auth URL config set via Management API: Site URL `https://membership-bice.vercel.app`, redirect allowlist `https://membership-bice.vercel.app/**,http://localhost:3000/**`.
-- DB password stored in gitignored `.new-supabase-db-password.txt` (Supabase shows it only once).
-- **Implication:** Rev can now log into Supabase directly to see/manage this project. Vercel Marketplace is no longer the Supabase provider; future Supabase changes go through the Supabase dashboard or `supabase` CLI, not Vercel.
-
----
-
 **End of decisions log.**

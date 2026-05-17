@@ -32,6 +32,11 @@ Format:
 - **Root cause:** Assumed shadcn = Radix from training data; this project's preset uses Base UI.
 - **Rule going forward:** For polymorphic shadcn components in this repo use `render={<El/>}`. Read `components/ui/<name>.tsx` to confirm the underlying primitive before using composition props.
 
+### 2026-05-17 — Vercel Marketplace Supabase lives in a Vercel-managed org
+- **What happened:** Phase 0 provisioned Supabase via Vercel Marketplace. The project landed in a Vercel-managed Supabase org — Rev couldn't see it when logging into Supabase directly (only his own "awakened-mind" project showed). Reachable only via Vercel SSO; billing + data entangled with Vercel.
+- **Root cause:** Vercel Marketplace integrations create resources under Vercel's managed org, not the user's own provider account.
+- **Rule going forward:** For services the user will own long-term with customer data (DB, auth), prefer provisioning in the user's own provider account from the start. If a Marketplace integration was used, surface the ownership/access tradeoff early. Migrating is cheap pre-launch (zero data), expensive later. The authenticated `supabase` CLI + keychain mgmt token (`security find-generic-password -s "Supabase CLI" -w` → strip `go-keyring-base64:` → base64 -d) lets Claude create projects and set auth config autonomously.
+
 ### 2026-05-16 — Admin lives at literal `/admin`, not an `(admin)` route group
 - **What happened:** PRD/CLAUDE.md sketch showed `app/(admin)/`. Route groups are URL-transparent, so `(admin)/programs` would collide with member `(app)/programs/[slug]` at `/programs`.
 - **Root cause:** Conceptual grouping in docs read as literal routing.
