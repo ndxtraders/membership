@@ -46,16 +46,27 @@ This is the single source of truth for what's in progress. Mark items as you com
 - [ ] **Vercel `preview` env vars not set** — `vercel env add … preview` via stdin fails; needs `--value … --yes --force`. Not needed until PR preview deploys are used. Wire before Phase 6 QA. Production + development are set.
 - [ ] Supabase project migrated to Rev-owned org (ref `ntxbxeuqzlmxqdmberki`) — see DECISIONS-LOG amendment 2026-05-17. Verify Postgres pooler strings in `.env.local` before first Drizzle migration in Phase 2.
 
-## Phase 2 — Content Schema + Admin v1 (Week 2)
+## Phase 2 — Content Schema + Admin v1 (Week 2) — IN PROGRESS
 
-- [ ] Install Drizzle + Drizzle Kit + postgres-js
-- [ ] Schema: `users`, `programs`, `modules`, `lessons`, `products`, `entitlements`, `progress`, `purchases`
-- [ ] RLS policies for member-owned tables (`auth.uid() = user_id`)
-- [ ] Migrate to Supabase
-- [ ] Admin Programs CRUD (list, create, edit, archive, duplicate)
-- [ ] Admin Modules CRUD with mobile-friendly drag-reorder
+DB layer done & deployed to Supabase (2026-05-17). Admin UI is next.
+
+- [x] Install Drizzle + Drizzle Kit + postgres-js + dotenv
+- [x] Verify Postgres pooler (6543) + direct/session (5432) connections — host `aws-1-us-west-1.pooler.supabase.com`, PG 17.6
+- [x] Schema: `users`, `programs`, `modules`, `lessons`, `products`, `entitlements`, `progress`, `purchases` (`lib/db/schema.ts`)
+- [x] `drizzle.config.ts` (migrations over direct conn), `lib/db/index.ts` (runtime over pooled, `prepare:false`)
+- [x] Migration 0000 — all 8 tables applied to Supabase
+- [x] Migration 0001 — `users`→`auth.users` FK (cascade), `handle_new_user` signup trigger, existing-user backfill, `has_program_access()` helper, RLS enabled on all 8 tables, 11 default-deny + narrow-allow policies. Applied & verified.
+- [ ] **Admin Programs CRUD (list, create, edit, archive, duplicate)** ← resume here
+- [ ] Admin Modules CRUD nested under Programs (mobile-friendly reorder)
 - [ ] Admin Lessons quick-add (type picker → URL paste or upload → title → publish)
 - [ ] Supabase Storage upload route for PDF + audio
+- [ ] Build green + smoke test + commit + deploy (Phase 2 close)
+
+### Resume notes (next session)
+- DB is live; `db` client exported from `lib/db`. Admin already gated (`app/admin/layout.tsx`) and is the only write path besides Stripe webhook (Phase 4).
+- Admin writes use Drizzle (connects as owner → bypasses RLS by design; gate is the boundary).
+- Hierarchy is **Program → Module → Lesson**. Modules CRUD is nested inside a program's edit screen (no top-level "Modules" — by design, see lessons.md).
+- `lesson_type` includes `video_mux` in the enum but it must NOT be creatable in v1 (CLAUDE.md §3/§5).
 
 ## Phase 3 — Renderers + Access Gating (Week 3)
 
